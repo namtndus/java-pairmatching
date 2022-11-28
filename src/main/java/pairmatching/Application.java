@@ -11,6 +11,10 @@ public class Application {
         String userAnswer;
         do {
             userAnswer = view.printMenu();
+            if(userAnswer.equals("1")){
+                String userSelectMenu = view.printMenu();
+                String[] selectedMenus = userSelectMenu.split(",\\s");
+            }
         }while (userAnswer.equals("Q"));
     }
 }
