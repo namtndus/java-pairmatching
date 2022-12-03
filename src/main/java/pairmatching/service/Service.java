@@ -2,6 +2,7 @@ package pairmatching.service;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import jdk.internal.util.xml.impl.Input;
+import org.graalvm.compiler.hotspot.nodes.profiling.RandomSeedNode;
 import pairmatching.domain.*;
 import pairmatching.model.InputFile;
 import pairmatching.repository.PairMatchingRepository;
@@ -26,6 +27,9 @@ public class Service {
             if(restartReq.equals("아니요")){
                 saveLogic();
             }
+            List<String> crew = Randoms.shuffle(backendCrew);
+            pairMatching.save(changeStringToCrew(crew));
+            pairMatchingRepository.save(pairMatching);
         }
     }
 
