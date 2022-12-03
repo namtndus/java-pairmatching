@@ -1,5 +1,8 @@
 package pairmatching.model;
 
+import pairmatching.domain.Course;
+import pairmatching.domain.Crew;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -26,4 +29,19 @@ public class InputFile {
         return backendCrews;
     }
 
+    public List<String> inputFrontendCrews(){
+        List<String> frontendCrews = new ArrayList<>();
+
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(fileLocation+"frontend-crew.md"));
+            while (true){
+                String frontendCrew = br.readLine();
+                if(frontendCrew == null) break;
+                frontendCrews.add(frontendCrew);
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return frontendCrews;
+    }
 }
