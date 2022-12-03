@@ -1,7 +1,5 @@
 package pairmatching.service;
 
-import camp.nextstep.edu.missionutils.Randoms;
-import jdk.internal.util.xml.impl.Input;
 import pairmatching.domain.*;
 import pairmatching.model.InputFile;
 import pairmatching.repository.PairMatchingRepository;
