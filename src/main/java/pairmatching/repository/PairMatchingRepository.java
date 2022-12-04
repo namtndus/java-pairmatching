@@ -4,6 +4,7 @@ import pairmatching.domain.Crew;
 import pairmatching.domain.PairMatching;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -12,9 +13,11 @@ public class PairMatchingRepository {
 
     public void save(PairMatching pairMatching){
         if(containPairMatching(pairMatching)){
-            getPairMatchings(pairMatching).clear();
+            getPairMatchingsList(pairMatching).clear();
+            Collections.replaceAll(pairMatchings,getPairMatching(pairMatching),pairMatching);
+        }else{
+            pairMatchings.add(pairMatching);
         }
-        pairMatchings.add(pairMatching);
     }
 
     public boolean equalsCrews(PairMatching pairMatching,List<Crew> suffledCrews){
@@ -38,9 +41,14 @@ public class PairMatchingRepository {
         return false;
     }
 
-    public LinkedHashMap<Crew,Crew> getPairMatchings(PairMatching pairMatching) {
+    public LinkedHashMap<Crew,Crew> getPairMatchingsList(PairMatching pairMatching) {
         return pairMatchings.stream().filter(pair -> pair.equals(pairMatching))
                 .findAny().get().getPairMatching();
+    }
+
+    public PairMatching getPairMatching(PairMatching pairMatching){
+        return pairMatchings.stream().filter(pair -> pair.equals(pairMatching))
+                .findAny().get();
     }
 
     // 객체가 포함이 되어있는지 확인함

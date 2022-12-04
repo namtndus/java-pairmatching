@@ -37,14 +37,14 @@ public class Service {
 
         pairMatching.save(changeStringToCrew(crew));
         pairMatchingRepository.save(pairMatching);
-        return pairMatchingRepository.getPairMatchings(pairMatching);
+        return pairMatchingRepository.getPairMatchingsList(pairMatching);
     }
 
     public void printCrewList(){
         String[] programeInfo = vaildAnswer();
         PairMatching pairMatching = new PairMatching(programeInfo);
         if(pairMatchingRepository.containPairMatching(pairMatching)){
-            outputView.printCrews(pairMatchingRepository.getPairMatchings(pairMatching));
+            outputView.printCrews(pairMatchingRepository.getPairMatchingsList(pairMatching));
         }else {
             System.out.println("[ERROR] 해당 정보는 없습니다");
         }
