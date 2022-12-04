@@ -15,7 +15,7 @@ public enum Course {
     // 추가 기능 구현
     public static Course findCourse(String courseName){
         return Arrays.stream(values())
-                .filter(course -> course.name.equals(course))
+                .filter(course -> course.name.equals(courseName))
                 .findAny()
                 .orElseThrow(() ->new IllegalArgumentException("[ERROR] 없는 코스입니다"));
     }

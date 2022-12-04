@@ -10,7 +10,7 @@ import java.util.List;
 
 public class InputFile {
 
-    private final String fileLocation = "/home/namtndus/woowacourse/java-pairmatching/src/main/java/resources/";
+    private final String fileLocation = "/home/namtndus/woowacourse/java-pairmatching/src/main/resources/";
 
     public List<String> inputBackendCrews(){
         List<String> backendCrews = new ArrayList<>();

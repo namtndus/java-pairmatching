@@ -1,12 +1,11 @@
 package pairmatching.service;
 
 import camp.nextstep.edu.missionutils.Randoms;
-import jdk.internal.util.xml.impl.Input;
-import org.graalvm.compiler.hotspot.nodes.profiling.RandomSeedNode;
 import pairmatching.domain.*;
 import pairmatching.model.InputFile;
 import pairmatching.repository.PairMatchingRepository;
 import pairmatching.view.InputView;
+import pairmatching.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -14,12 +13,14 @@ import java.util.List;
 
 public class Service {
     InputView inputView = new InputView();
+    OutputView outputView = new OutputView();
     InputFile inputFile = new InputFile();
     List<String> backendCrew = inputFile.inputBackendCrews();
     List<String> frontendCrew = inputFile.inputFrontendCrews();
     PairMatchingRepository pairMatchingRepository = new PairMatchingRepository();
 
-    public void saveLogic(){
+    public LinkedHashMap<Crew,Crew> saveLogic(){
+        List<String> crew;
         String[] programeInfo = vaildAnswer();
         PairMatching pairMatching = new PairMatching(programeInfo);
         if(pairMatchingRepository.containPairMatching(pairMatching)){
@@ -27,18 +28,29 @@ public class Service {
             if(restartReq.equals("아니요")){
                 saveLogic();
             }
-            List<String> crew = Randoms.shuffle(backendCrew);
-            pairMatching.save(changeStringToCrew(crew));
-            pairMatchingRepository.save(pairMatching);
         }
+        if(programeInfo[0].equals("백엔드")){
+            crew = Randoms.shuffle(backendCrew);
+        }else {
+            crew = Randoms.shuffle(frontendCrew);
+        }
+
+        pairMatching.save(changeStringToCrew(crew));
+        pairMatchingRepository.save(pairMatching);
+        return pairMatchingRepository.getPairMatchings(pairMatching);
     }
 
-    public LinkedHashMap<Crew,Crew> printCrewList(){
+    public void printCrewList(){
         String[] programeInfo = vaildAnswer();
         PairMatching pairMatching = new PairMatching(programeInfo);
-        return pairMatchingRepository.getPairMatchings(pairMatching);
+        if(pairMatchingRepository.containPairMatching(pairMatching)){
+            outputView.printCrews(pairMatchingRepository.getPairMatchings(pairMatching));
+        }else {
+            System.out.println("[ERROR] 해당 정보는 없습니다");
+        }
 
     }
+
 
     public void clear(){
         pairMatchingRepository.clear();
@@ -67,21 +79,5 @@ public class Service {
             inputCrews.add(new Crew(crew));
         }
         return inputCrews;
-    }
-
-    // 객체를 저장하기 전에 중복된 수가 있는지 확인하는 함수
-    public void save(String[] userAnswer){
-        List<Crew> changeCrew = changeStringToCrew(backendCrew);
-        List<Mission> getMissions = Level.findMissions(userAnswer[1]);
-
-        for(Mission mis : getMissions){
-            PairMatching pairMatching = new PairMatching(userAnswer);
-            // true 이면 중복된 숫자가 있다는 표시이다.
-            if(pairMatchingRepository.equalsCrews(pairMatching,changeCrew)){
-                System.out.println("바꾸기");
-                break;
-            }
-
-        }
     }
 }

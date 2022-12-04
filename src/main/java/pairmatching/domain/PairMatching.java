@@ -20,7 +20,7 @@ public class PairMatching {
 
     //
     public void save(List<Crew> suffleCrews){
-        for(int suffleCrewsIndex = 0; suffleCrewsIndex < suffleCrewsIndex/2; suffleCrewsIndex++){
+        for(int suffleCrewsIndex = 0; suffleCrewsIndex < suffleCrews.size()/2; suffleCrewsIndex++){
             pairMatching.put(suffleCrews.get(suffleCrewsIndex*2),suffleCrews.get(suffleCrewsIndex*2+1));
         }
         if(suffleCrews.size() %2 ==1){
@@ -57,6 +57,6 @@ public class PairMatching {
             return false;
         }
         PairMatching crews = (PairMatching) obj;
-        return this.course == crews.course && this.level == crews.level;
+        return this.course == crews.course && this.level == crews.level && this.mission == crews.mission;
     }
 }

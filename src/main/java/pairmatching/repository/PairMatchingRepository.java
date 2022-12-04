@@ -11,6 +11,9 @@ public class PairMatchingRepository {
     List<PairMatching> pairMatchings = new ArrayList<>();
 
     public void save(PairMatching pairMatching){
+        if(containPairMatching(pairMatching)){
+            getPairMatchings(pairMatching).clear();
+        }
         pairMatchings.add(pairMatching);
     }
 
